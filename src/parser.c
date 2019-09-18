@@ -10,12 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include "../libft/includes/libft.h"
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <stdio.h>
 #include "../includes/fillit.h"
 
 int		retmsg(char *str)
@@ -24,95 +18,79 @@ int		retmsg(char *str)
 	return (1);
 }
 
-int		connections(char *str)
+t_piece	*makepiece(char *str, char letter)
 {
-	int		count;
+	t_piece	*tetriptr;
 	int		i;
+	int		x;
+	int		y;
 
 	i = 0;
-	count = 0;
+	x = 0;
+	y = 1;
+	if (!(tetriptr = (t_piece*)malloc(sizeof(t_piece))))
+		return (NULL);
+	tetriptr->letter = letter;
 	while (i < 20)
 	{
-		if (str[i] != '#' && i < 20)
-			i++;
 		if (str[i] == '#')
 		{
-			if (i % 5 != 0 && str[i - 1] == '#')
-				count++;
-			if (str[i + 1] == '#')
-				count++;
-			if (i > 5 && str[i - 5] == '#')
-				count++;
-			if (i < 20 && str[i + 5] == '#')
-				count++;
-			i++;
+			tetriptr->coord[x] = (i >= 5) ? (i % 5) : i;
+			tetriptr->coord[y] = i / 5;
+			x += 2;
+			y += 2;
 		}
+		i++;
 	}
-	return (count);
+	return (tetriptr);
 }
 
-int		checker(char *str, int byte_count)
+t_piece	*makelist(char *str, int size)
 {
 	int		i;
-	int		block;
+	char	letter;
+	t_piece	*cur;
+	t_piece	*first;
 
 	i = 0;
-	block = 0;
-	while (i < 20)
+	letter = 'A';
+	while (i < size)
 	{
-		while (i % 5 < 4)
+		if (letter == 'A')
 		{
-			if (str[i] != '#' && str[i] != '.')
-				return (1);
-			if (str[i] == '#' && ++block > 4)
-				return (2);
-			i++;
+			first = makepiece(str, letter);
+			cur = first;
 		}
-		if (str[i] == '\n')
-			i++;
 		else
-			return (2);
+		{
+			cur->next = makepiece(str, letter);
+			cur = cur->next;
+		}
+		letter++;
+		i += 21;
 	}
-	if (byte_count == 21 && str[20] != '\n')
-		return (4);
-	if (connections(str) != 6 && connections(str) != 8)
-		return (5);
-	return (0);
+	return (first);
 }
 
-int		reader(const int fd)
+t_piece	*reader(const int fd)
 {
-	char	buf[21];
+	char	buf[545];
 	int		byte_count;
-	int		tetri_count;
 
-	tetri_count = 0;
-	while ((byte_count = read(fd, buf, 21)) >= 20)
-	{
-		printf("Tetri#%d\n", tetri_count + 1);
-		printf("%s\n", buf);
-		if (checker(buf, byte_count) > 0)
-		{
-			printf("\nchecker return: %d\n", checker(buf, byte_count));
-			return (1);
-		}
-		tetri_count++;
-		if (tetri_count > 26)
-			return (1);
-	}
-	if (byte_count == 0 && tetri_count == 0)
-		return (1);
-	if (byte_count == 0)
-		return (0);
-	else
-		return (1);
+	if ((byte_count = read(fd, buf, 546)) < 19 || byte_count > 545)
+		return (NULL);
+	if (checker(buf, byte_count) > 0)
+		return (NULL);
+	return (makelist(buf, byte_count));
 }
 
 int		main(int argc, char **argv)
 {
+	t_piece	*tetri;
+
 	if (argc != 2)
 		return (retmsg("Usage: ./fillit [input file]"));
-	if (reader(open(argv[1], O_RDONLY)) == 1)
+	if (!(tetri = reader(open(argv[1], O_RDONLY))))
 		return (retmsg("error"));
 	return (0);
 }
