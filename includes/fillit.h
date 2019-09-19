@@ -20,8 +20,8 @@ t_piece	*reader(const int fd);
 int		connections(char *str);
 int		blocks(char *str);
 int		checker(char *str, int size);
-t_piece	*makelist(char *str, int size);
-t_piece	*makepiece(char *str, char letter);
-t_piece	*shifter(t_piece *tetriptr);
+t_piece	*addpiece(t_piece *tetri, char *str, int size, char letter);
+t_piece	*makelist(char *str, char letter);
+t_piece	*shifter(t_piece *tetri);
 
 #endif
