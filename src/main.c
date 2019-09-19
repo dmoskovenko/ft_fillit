@@ -12,6 +12,12 @@
 
 #include "../includes/fillit.h"
 
+int		retmsg(char *str)
+{
+	ft_putendl(str);
+	return (1);
+}
+
 int		main(int argc, char **argv)
 {
 	t_piece	*tetri;

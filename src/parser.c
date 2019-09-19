@@ -12,12 +12,6 @@
 
 #include "../includes/fillit.h"
 
-int		retmsg(char *str)
-{
-	ft_putendl(str);
-	return (1);
-}
-
 t_piece	*shifter(t_piece *tetri)
 {
 	while (tetri->coord[0] != 0 && tetri->coord[2] != 0 && \

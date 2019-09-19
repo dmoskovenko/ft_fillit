@@ -15,7 +15,6 @@ typedef struct	s_piece
 	struct s_piece	*next;
 }				t_piece;
 
-int		retmsg(char *str);
 t_piece	*reader(const int fd);
 int		connections(char *str);
 int		blocks(char *str);
