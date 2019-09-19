@@ -75,12 +75,12 @@ int		checker(char *str, int size)
 	{
 		if (blocks(str + i))
 		{
-			printf("ret: %d\n", blocks(str + i));
+//			printf("ret: %d\n", blocks(str + i));
 			return (1);
 		}
 		if (!(connections(str + i) == 6 || connections(str + i) == 8))
 		{
-			printf("connections: %d\ti: %d\n", connections(str + i), i);
+//			printf("connections: %d\ti: %d\n", connections(str + i), i);
 			return (1);
 		}
 		i += 21;

@@ -18,16 +18,35 @@ int		retmsg(char *str)
 	return (1);
 }
 
+t_piece	*shifter(t_piece *tetriptr)
+{
+	while (tetriptr->coord[0] != 0 && tetriptr->coord[2] != 0 && \
+	tetriptr->coord[4] != 0 && tetriptr->coord[2] != 6)
+	{
+		tetriptr->coord[0] -= 1;
+		tetriptr->coord[2] -= 1;
+		tetriptr->coord[4] -= 1;
+		tetriptr->coord[6] -= 1;
+	}
+	while (tetriptr->coord[1] != 0 && tetriptr->coord[3] != 0 && \
+	tetriptr->coord[5] != 0 && tetriptr->coord[7] != 0)
+	{
+		tetriptr->coord[1] -= 1;
+		tetriptr->coord[3] -= 1;
+		tetriptr->coord[5] -= 1;
+		tetriptr->coord[7] -= 1;
+	}
+	return (tetriptr);
+}
+
 t_piece	*makepiece(char *str, char letter)
 {
 	t_piece	*tetriptr;
 	int		i;
-	int		x;
-	int		y;
+	int		j;
 
 	i = 0;
-	x = 0;
-	y = 1;
+	j = 0;
 	if (!(tetriptr = (t_piece*)malloc(sizeof(t_piece))))
 		return (NULL);
 	tetriptr->letter = letter;
@@ -35,14 +54,16 @@ t_piece	*makepiece(char *str, char letter)
 	{
 		if (str[i] == '#')
 		{
-			tetriptr->coord[x] = (i >= 5) ? (i % 5) : i;
-			tetriptr->coord[y] = i / 5;
-			x += 2;
-			y += 2;
+			tetriptr->coord[j] = (i >= 5) ? (i % 5) : i;
+//			printf("x: %d\n", tetriptr->coord[j]);
+			j++;
+			tetriptr->coord[j] = i / 5;
+//			printf("y: %d\n", tetriptr->coord[j]);
+			j++;
 		}
 		i++;
 	}
-	return (tetriptr);
+	return (shifter(tetriptr));
 }
 
 t_piece	*makelist(char *str, int size)
@@ -58,17 +79,18 @@ t_piece	*makelist(char *str, int size)
 	{
 		if (letter == 'A')
 		{
-			first = makepiece(str, letter);
+			first = makepiece(str + i, letter);
 			cur = first;
 		}
 		else
 		{
-			cur->next = makepiece(str, letter);
+			cur->next = makepiece(str + i, letter);
 			cur = cur->next;
 		}
 		letter++;
 		i += 21;
 	}
+	cur->next = NULL;
 	return (first);
 }
 
@@ -82,15 +104,4 @@ t_piece	*reader(const int fd)
 	if (checker(buf, byte_count) > 0)
 		return (NULL);
 	return (makelist(buf, byte_count));
-}
-
-int		main(int argc, char **argv)
-{
-	t_piece	*tetri;
-
-	if (argc != 2)
-		return (retmsg("Usage: ./fillit [input file]"));
-	if (!(tetri = reader(open(argv[1], O_RDONLY))))
-		return (retmsg("error"));
-	return (0);
 }
