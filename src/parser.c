@@ -57,29 +57,29 @@ t_piece	*addpiece(t_piece *tetri, char *str, int size, char letter)
 
 t_piece	*makelist(char *str, char letter)
 {
-	t_piece	*first;
+	t_piece	*piece;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	if (!(first = (t_piece*)malloc(sizeof(t_piece))))
+	if (!(piece = (t_piece*)malloc(sizeof(t_piece))))
 		return (NULL);
-	first->letter = letter;
+	piece->letter = letter;
 	while (i < 20)
 	{
 		if (str[i] == '#')
 		{
-			first->coord[j] = (i >= 5) ? (i % 5) : i;
-//			printf("x: %d\n", first->coord[j]);
+			piece->coord[j] = (i >= 5) ? (i % 5) : i;
+//			printf("x: %d\n", piece->coord[j]);
 			j++;
-			first->coord[j] = i / 5;
-//			printf("y: %d\n", first->coord[j]);
+			piece->coord[j] = i / 5;
+//			printf("y: %d\n", piece->coord[j]);
 			j++;
 		}
 		i++;
 	}
-	return (shifter(first));
+	return (shifter(piece));
 }
 
 t_piece	*reader(const int fd)
@@ -98,10 +98,6 @@ t_piece	*reader(const int fd)
 	if (checker(buf, byte_count) > 0)
 		return (NULL);
 	tetri = makelist(buf, letter);
-	while (i < byte_count)
-	{
-		addpiece(tetri, buf, byte_count, letter);
-		i += 21;
-	}
+	addpiece(tetri, buf + 21, byte_count, letter);
 	return (tetri);
 }
