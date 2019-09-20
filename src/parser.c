@@ -80,11 +80,9 @@ t_piece	*reader(const int fd)
 {
 	char	buf[545];
 	int		byte_count;
-	int		i;
 	char	letter;
 	t_piece	*tetri;
 
-	i = 0;
 	letter = 'A';
 	if ((byte_count = read(fd, buf, 546)) < 19 || byte_count > 545)
 		return (NULL);
