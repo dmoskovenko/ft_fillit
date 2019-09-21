@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 20:33:58 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/21 21:52:03 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/22 00:32:31 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 char		**create_map(t_piece *tetri)
 {
+	t_piece *piece;
 	char	**map;
 	int		piece_count;
 	int		i;
 	
 	i = 0;
 	piece_count = 0;
-	while (tetri)
+	piece = tetri;
+	while (piece)
 	{
-		printf("piece_count: %d\n", piece_count);
+/*
+		printf("\npiece#%d\n", piece_count + 1);
+		printf("letter: %c\n", tetri->letter);
 		printf("x: %d\n", tetri->coord[0]);
 		printf("y: %d\n", tetri->coord[1]);
 		printf("x: %d\n", tetri->coord[2]);
@@ -31,19 +35,19 @@ char		**create_map(t_piece *tetri)
 		printf("y: %d\n", tetri->coord[5]);
 		printf("x: %d\n", tetri->coord[6]);
 		printf("y: %d\n", tetri->coord[7]);
-		tetri = tetri->next;
+*/
+		piece = piece->next;
 		piece_count++;
 	}
 	map = (char**)malloc(sizeof(*map) * piece_count);
-/*
 	while (i < piece_count)
 	{
 		map[i] = (char*)malloc(sizeof(map) * piece_count + 1);
 		ft_memset(map[i], '.', piece_count);
 		map[i][piece_count + 1] = '\0';
-		printf("map\n%s\n", map[i]);
+		printf("map[%d]\n%s\n", i, map[i]);
+		i++;
 	}
-*/
 	return (map);
 }
 

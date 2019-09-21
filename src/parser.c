@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/11 21:45:43 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/21 21:59:49 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/22 00:29:12 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ t_piece	*shifter(t_piece *tetri)
 t_piece	*addpiece(t_piece *tetri, char *str, int size, char letter)
 {
 	int		i;
-	t_piece	*first;
+	t_piece	*piece;
 
 	i = 0;
-	first = tetri;
-	while (i < size)
+	piece = tetri;
+	while ((i + 21) < size)
 	{
-		tetri->next = makelist(str + i, letter);
-		tetri = tetri->next;
-		letter++;
 		i += 21;
+		letter++;
+		piece->next = makelist(str + i, letter);
+		piece = piece->next;
 	}
-	tetri->next = NULL;
-	return (first);
+	piece->next = NULL;
+	return (tetri);
 }
 
 t_piece	*makelist(char *str, char letter)
@@ -67,14 +67,15 @@ t_piece	*makelist(char *str, char letter)
 		if (str[i] == '#')
 		{
 			piece->coord[j] = (i >= 5) ? (i % 5) : i;
-			printf("x: %d\n", piece->coord[j]);
+//			printf("x: %d\n", piece->coord[j]);
 			j++;
 			piece->coord[j] = i / 5;
-			printf("y: %d\n", piece->coord[j]);
+//			printf("y: %d\n", piece->coord[j]);
 			j++;
 		}
 		i++;
 	}
+//	printf("\n");
 	return (shifter(piece));
 }
 
@@ -93,7 +94,8 @@ t_piece	*reader(const int fd)
 	buf[byte_count] = '\0';
 	if (checker(buf, byte_count) > 0)
 		return (NULL);
+//	printf("size: %d\n\n", byte_count);
 	tetri = makelist(buf, letter);
-	tetri = addpiece(tetri, buf + 21, byte_count, letter);
+	tetri = addpiece(tetri, buf, byte_count, letter);
 	return (tetri);
 }
