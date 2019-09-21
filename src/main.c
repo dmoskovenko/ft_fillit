@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 19:53:22 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/19 19:53:32 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/21 20:18:14 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		main(int argc, char **argv)
 	if (!(tetri = reader(open(argv[1], O_RDONLY))))
 		return (retmsg("error"));
 //	solver(tetri);
+	create_map(tetri);
 	return (0);
 }
