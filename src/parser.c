@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/11 21:45:43 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/22 00:29:12 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/23 01:24:27 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,20 @@ t_piece	*shifter(t_piece *tetri)
 t_piece	*addpiece(t_piece *tetri, char *str, int size, char letter)
 {
 	int		i;
-	t_piece	*piece;
+	t_piece	*first;
 
 	i = 0;
-	piece = tetri;
+	first = tetri;
 	while ((i + 21) < size)
 	{
 		i += 21;
 		letter++;
-		piece->next = makelist(str + i, letter);
-		piece = piece->next;
+//		printf("letter: %c\n", tetri->letter);
+		tetri->next = makelist(str + i, letter);
+		tetri = tetri->next;
 	}
-	piece->next = NULL;
-	return (tetri);
+	tetri->next = NULL;
+	return (first);
 }
 
 t_piece	*makelist(char *str, char letter)
@@ -79,15 +80,13 @@ t_piece	*makelist(char *str, char letter)
 	return (shifter(piece));
 }
 
-t_piece	*reader(const int fd)
+t_piece		*reader(const int fd)
 {
 	char	buf[545];
 	int		byte_count;
-	int		i;
 	char	letter;
 	t_piece	*tetri;
 
-	i = 0;
 	letter = 'A';
 	if ((byte_count = read(fd, buf, 546)) < 19 || byte_count > 545)
 		return (NULL);
