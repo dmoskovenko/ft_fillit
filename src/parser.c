@@ -6,11 +6,70 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/11 21:45:43 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/23 01:24:27 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/26 20:40:30 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
+/*
+t_piece	*dimension(t_piece *piece)
+{
+	int i;
+	int xmin;
+	int xmax;
+	int ymin;
+	int ymax;
+
+	i = 0;
+	xmin = piece->coord[i];
+	ymin = piece->coord[i + 1];
+	xmax = xmin;
+	ymax = ymin;
+	while (i < 6)
+	{
+		xmin = (xmin < piece->coord[i + 2]) ? xmin : piece->coord[i + 2];
+		xmax = (xmax > piece->coord[i + 2]) ? xmax : piece->coord[i + 2];
+//		printf("xmin: %d\n", xmin);
+//		printf("xmax: %d\n", xmax);
+		i++;
+		ymin = (ymin < piece->coord[i + 2]) ? ymin : piece->coord[i + 2];
+		ymax = (ymax > piece->coord[i + 2]) ? ymax : piece->coord[i + 2];
+		i++;
+//		printf("ymin: %d\n", ymin);
+//		printf("ymax: %d\n", ymax);
+	}
+	i = 0;
+	piece->width = xmax - xmin + 1;
+	piece->height = ymax - ymin + 1;
+	return (piece);
+}
+*/
+
+t_piece	*dimension(t_piece *piece)
+{
+	int i;
+	int xmax;
+	int ymax;
+
+	i = 0;
+	xmax = piece->coord[i];
+	ymax = piece->coord[i + 1];
+	while (i < 6)
+	{
+		xmax = (xmax > piece->coord[i + 2]) ? xmax : piece->coord[i + 2];
+//		printf("xmax: %d\n", xmax);
+		i++;
+		ymax = (ymax > piece->coord[i + 2]) ? ymax : piece->coord[i + 2];
+		i++;
+//		printf("ymax: %d\n", ymax);
+	}
+	i = 0;
+	piece->width = xmax + 1;
+	piece->height = ymax + 1;
+//	printf("width: %d\n", piece->width);
+//	printf("height: %d\n", piece->height);
+	return (piece);
+}
 
 t_piece	*shifter(t_piece *tetri)
 {
@@ -76,8 +135,12 @@ t_piece	*makelist(char *str, char letter)
 		}
 		i++;
 	}
+	shifter(piece);
+//	dimension(piece);
+//	printf("width: %d\n", piece->width);
+//	printf("height: %d\n", piece->height);
 //	printf("\n");
-	return (shifter(piece));
+	return (dimension(piece));
 }
 
 t_piece		*reader(const int fd)
