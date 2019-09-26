@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 20:33:58 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/26 23:52:33 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/27 00:12:14 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ void	insert_piece(t_map *map, t_piece *piece, int x, int y, char c)
 	while (i < 8)
 	{
 		map->arr[piece->coord[i + 1] + y][piece->coord[i] + x] = c;
-		printf("arr[x]: %d\n", (piece->coord[i] + x));
-		printf("arr[y]: %d\n", (piece->coord[i + 1] + y));
-		printf("s[%d]: %s\n", i, map->arr[piece->coord[i + 1] + y]);
+//		printf("arr[x]: %d\n", (piece->coord[i] + x));
+//		printf("arr[y]: %d\n", (piece->coord[i + 1] + y));
+//		printf("s[%d]: %s\n", i, map->arr[piece->coord[i + 1] + y]);
 		i += 2;
 	}
-	printf("\n");
+//	printf("\n");
 //	printf("here\n");
 }
 /*
@@ -181,9 +181,9 @@ t_map	*solve(t_piece *tetri)
 	map = create_map(size);
 	while (!solve_map(map, piece, size))
 	{
-		printf("size: %d\n", size);
-		print_map(map);
-		printf("\n");
+//		printf("size: %d\n", size);
+//		print_map(map);
+//		printf("\n");
 		free_map(map, size);
 		size++;
 		map = create_map(size);
