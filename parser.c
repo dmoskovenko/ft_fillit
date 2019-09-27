@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/11 21:45:43 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/27 03:03:48 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/27 20:26:33 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_piece	*makelist(char *str, char letter)
 	return (dimension(piece));
 }
 
-t_piece		*reader(const int fd)
+t_piece	*reader(const int fd)
 {
 	char	buf[545];
 	int		byte_count;

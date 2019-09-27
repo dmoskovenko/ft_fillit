@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 20:33:58 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/27 20:12:39 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/27 20:26:03 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		solve_map(char **map, t_piece *tetri, int size)
 {
-	t_position	pos;
+	t_pos		pos;
 	t_piece		*piece;
 
 	if (tetri == NULL)
@@ -40,27 +40,7 @@ int		solve_map(char **map, t_piece *tetri, int size)
 	return (0);
 }
 
-void	print_map(char **map)
-{
-	int x;
-	int y;
-
-	x = 0;
-	y = 0;
-	while (map[y])
-	{
-		while (map[y][x])
-		{
-			write(1, &(map[y][x]), 1);
-			x++;
-		}
-		write(1, "\n", 1);
-		x = 0;
-		y++;
-	}
-}
-
-int		check_place(char **map, t_piece *piece, t_position pos, char c)
+int		check_place(char **map, t_piece *piece, t_pos pos, char c)
 {
 	int		i;
 
@@ -75,7 +55,7 @@ int		check_place(char **map, t_piece *piece, t_position pos, char c)
 	return (1);
 }
 
-void	insert_piece(char **map, t_piece *piece, t_position pos, char c)
+void	insert_piece(char **map, t_piece *piece, t_pos pos, char c)
 {
 	int		i;
 
@@ -85,45 +65,6 @@ void	insert_piece(char **map, t_piece *piece, t_position pos, char c)
 		map[piece->coord[i + 1] + pos.y][piece->coord[i] + pos.x] = c;
 		i += 2;
 	}
-}
-
-int		map_size(int piece_count)
-{
-	int size;
-
-	size = 2;
-	while (size * size < (piece_count * 4))
-		size++;
-	return (size);
-}
-
-char		**create_map(int size)
-{
-	char	**map;
-	int		i;
-
-	i = 0;
-	map = (char**)ft_memalloc(sizeof(map) * size + 1);
-	while (i < size)
-	{
-		map[i] = ft_strnew(size);
-		ft_memset(map[i], '.', size);
-		i++;
-	}
-	return (map);
-}
-
-void	free_map(char **map, int size)
-{
-	int i;
-
-	i = 0;
-	while (i < size)
-	{
-		free(map[i]);
-		i++;
-	}
-	free(map);
 }
 
 void	free_tetri(t_piece *tetri)
