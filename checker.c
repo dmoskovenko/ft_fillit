@@ -6,11 +6,12 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 02:35:40 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/27 03:03:23 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/27 19:42:44 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 int		connections(char *str)
 {
@@ -50,7 +51,7 @@ int		blocks(char *str)
 	{
 		while ((i % 5) < 4)
 		{
-			if (str[i] != '#' && str[i] != '.' && str[i] != '\n')
+			if (str[i] != '#' && str[i] != '.')
 				return (1);
 			if (str[i] == '#' && ++block > 4)
 				return (2);
@@ -71,6 +72,8 @@ int		checker(char *str, int size)
 
 	i = 0;
 	tetri_count = 0;
+	if (str[size - 1] == '\n' && str[size - 2] == '\n')
+		return (1);
 	while (i < size)
 	{
 		if (blocks(str + i))

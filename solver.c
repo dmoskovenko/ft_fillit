@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 20:33:58 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/27 03:03:53 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/27 20:12:39 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 
 int		solve_map(char **map, t_piece *tetri, int size)
 {
-	int			x;
-	int			y;
+	t_position	pos;
 	t_piece		*piece;
 
 	if (tetri == NULL)
 		return (1);
-	y = 0;
+	pos.y = 0;
 	piece = tetri;
-	while (y < size - piece->height + 1)
+	while (pos.y < size - piece->height + 1)
 	{
-		x = 0;
-		while (x < size - piece->width + 1)
+		pos.x = 0;
+		while (pos.x < size - piece->width + 1)
 		{
-			if (check_place(map, piece, x, y, piece->letter))
+			if (check_place(map, piece, pos, piece->letter))
 			{
 				if (solve_map(map, piece->next, size))
 					return (1);
 				else
-					insert_piece(map, piece, x, y, '.');
+					insert_piece(map, piece, pos, '.');
 			}
-			x++;
+			pos.x++;
 		}
-		y++;
+		pos.y++;
 	}
 	return (0);
 }
@@ -48,42 +47,42 @@ void	print_map(char **map)
 
 	x = 0;
 	y = 0;
-		while(map[y])
+	while (map[y])
+	{
+		while (map[y][x])
 		{
-			while(map[y][x])
-			{
-				write(1, &(map[y][x]), 1);
-				x++;
-			}
-			write(1, "\n", 1);
-			x = 0;
-			y++;
+			write(1, &(map[y][x]), 1);
+			x++;
 		}
+		write(1, "\n", 1);
+		x = 0;
+		y++;
+	}
 }
 
-int		check_place(char **map, t_piece *piece, int x, int y, char c)
+int		check_place(char **map, t_piece *piece, t_position pos, char c)
 {
 	int		i;
 
 	i = 0;
 	while (i < 8)
 	{
-		if (map[piece->coord[i + 1] + y][piece->coord[i] + x] != '.')
+		if (map[piece->coord[i + 1] + pos.y][piece->coord[i] + pos.x] != '.')
 			return (0);
 		i += 2;
 	}
-	insert_piece(map, piece, x, y, c);
-	return(1);
+	insert_piece(map, piece, pos, c);
+	return (1);
 }
 
-void	insert_piece(char **map, t_piece *piece, int x, int y, char c)
+void	insert_piece(char **map, t_piece *piece, t_position pos, char c)
 {
 	int		i;
 
 	i = 0;
 	while (i < 8)
 	{
-		map[piece->coord[i + 1] + y][piece->coord[i] + x] = c;
+		map[piece->coord[i + 1] + pos.y][piece->coord[i] + pos.x] = c;
 		i += 2;
 	}
 }
@@ -102,7 +101,7 @@ char		**create_map(int size)
 {
 	char	**map;
 	int		i;
-	
+
 	i = 0;
 	map = (char**)ft_memalloc(sizeof(map) * size + 1);
 	while (i < size)
