@@ -6,11 +6,11 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 02:35:40 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/21 19:50:34 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/27 03:03:23 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
+#include "fillit.h"
 
 int		connections(char *str)
 {
@@ -74,15 +74,9 @@ int		checker(char *str, int size)
 	while (i < size)
 	{
 		if (blocks(str + i))
-		{
-//			printf("ret: %d\n", blocks(str + i));
 			return (1);
-		}
 		if (!(connections(str + i) == 6 || connections(str + i) == 8))
-		{
-//			printf("connections: %d\ti: %d\n", connections(str + i), i);
 			return (1);
-		}
 		i += 21;
 		tetri_count++;
 	}
