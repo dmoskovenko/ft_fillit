@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:45 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/27 20:19:53 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/29 18:59:14 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int				map_size(int piece_count);
 int				solve_map(char **map, t_piece *tetri, int size);
 int				check_place(char **map, t_piece *piece, t_pos pos, char c);
 void			insert_piece(char **map, t_piece *piece, t_pos pos, char c);
-void			print_map(char **map);
+void			print_map(char **map, int size);
 void			free_map(char **map, int size);
 void			free_tetri(t_piece *tetri);
 

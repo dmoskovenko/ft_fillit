@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 20:33:58 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/27 20:26:03 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/29 18:58:30 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	**solve(t_piece *tetri)
 		size++;
 		map = create_map(size);
 	}
-	print_map(map);
+	print_map(map, size);
 	free_map(map, size);
 	free_tetri(tetri);
 	return (map);

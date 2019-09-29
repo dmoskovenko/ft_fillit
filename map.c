@@ -6,7 +6,7 @@
 /*   By: coclayto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:16:31 by coclayto          #+#    #+#             */
-/*   Updated: 2019/09/27 20:23:52 by coclayto         ###   ########.fr       */
+/*   Updated: 2019/09/29 18:58:32 by coclayto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ void	free_map(char **map, int size)
 	free(map);
 }
 
-void	print_map(char **map)
+void	print_map(char **map, int size)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	while (map[y])
+	while (y < size)
 	{
-		while (map[y][x])
+		while (x < size)
 		{
 			write(1, &(map[y][x]), 1);
 			x++;
