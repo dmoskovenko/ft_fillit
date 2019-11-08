@@ -1,6 +1,6 @@
 NAME = fillit
-SRCS = *.c 
-OBJS = *.o
+SRCS = main.c parser.c checker.c solver.c map.c
+OBJS = main.o parser.o checker.o solver.o map.o
 HDR = fillit.h 
 FLAGS = -Wall -Wextra -Werror
 
